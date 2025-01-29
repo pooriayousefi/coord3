@@ -76,7 +76,7 @@ export namespace R3
 	{
 		if constexpr (std::is_floating_point_v<T>)
 		{
-			if (std::abs(scalar) < std::numeric_limits<T>::epsilon)
+			if (std::abs(scalar) < std::numeric_limits<T>::epsilon())
 				throw std::overflow_error("Division by zero");
 			return { lhs.x / scalar, lhs.y / scalar, lhs.z / scalar };
 		}
@@ -92,9 +92,9 @@ export namespace R3
 		if constexpr (std::is_floating_point_v<T>)
 		{
 			if (
-				rhs.x < std::numeric_limits<T>::epsilon || 
-				rhs.y < std::numeric_limits<T>::epsilon ||
-				rhs.z < std::numeric_limits<T>::epsilon
+				rhs.x < std::numeric_limits<T>::epsilon() || 
+				rhs.y < std::numeric_limits<T>::epsilon() ||
+				rhs.z < std::numeric_limits<T>::epsilon()
 				)
 				throw std::overflow_error("Division by zero");
 			return { scalar / rhs.x, scalar / rhs.y, scalar / rhs.z };
@@ -154,7 +154,7 @@ export namespace R3
 		template<arithmetic T> constexpr cartesian_coordinate<T> normalize(const cartesian_coordinate<T>& rhs, T p)
 		{
 			const auto n = norm(rhs, p);
-			if (n < std::numeric_limits<T>::epsilon)
+			if (n < std::numeric_limits<T>::epsilon())
 				throw std::overflow_error("Division by zero");
 			return rhs / n;
 		}
@@ -178,7 +178,7 @@ export namespace R3
 		template<arithmetic T> constexpr cartesian_coordinate<T> normalize(const cartesian_coordinate<T>& rhs)
 		{
 			const auto n = norm(rhs);
-			if (n < std::numeric_limits<T>::epsilon)
+			if (n < std::numeric_limits<T>::epsilon())
 				throw std::overflow_error("Division by zero");
 			return rhs / n;
 		}
@@ -206,7 +206,7 @@ export namespace R3
 		template<arithmetic T> constexpr cartesian_coordinate<T> normalize(const cartesian_coordinate<T>& rhs)
 		{
 			const auto n = norm(rhs);
-			if (n < std::numeric_limits<T>::epsilon)
+			if (n < std::numeric_limits<T>::epsilon())
 				throw std::overflow_error("Division by zero");
 			return rhs / n;
 		}
@@ -234,7 +234,7 @@ export namespace R3
 		template<arithmetic T> constexpr cartesian_coordinate<T> normalize(const cartesian_coordinate<T>& rhs)
 		{
 			const auto n = norm(rhs);
-			if (n < std::numeric_limits<T>::epsilon)
+			if (n < std::numeric_limits<T>::epsilon())
 				throw std::overflow_error("Division by zero");
 			return rhs / n;
 		}
