@@ -40,11 +40,21 @@ export namespace R3
 	// arithmetic operator overloadings
 	template<arithmetic T> constexpr bool operator==(const cartesian_coordinate<T>& lhs, const cartesian_coordinate<T>& rhs)
 	{
-		return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z;
+		if constexpr (std::is_floating_point_v<T>)
+			return std::abs(lhs.x - rhs.x) < std::numeric_limits<T>::epsilon() &&
+			std::abs(lhs.y - rhs.y) < std::numeric_limits<T>::epsilon() &&
+			std::abs(lhs.z - rhs.z) < std::numeric_limits<T>::epsilon();
+		else if constexpr (std::is_integral_v<T>)
+			return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z;
 	}
 	template<arithmetic T> constexpr bool operator!=(const cartesian_coordinate<T>& lhs, const cartesian_coordinate<T>& rhs)
 	{
-		return lhs.x != rhs.x || lhs.y != rhs.y || lhs.z != rhs.z;
+		if constexpr (std::is_floating_point_v<T>)
+			return std::abs(lhs.x - rhs.x) >= std::numeric_limits<T>::epsilon() &&
+			std::abs(lhs.y - rhs.y) >= std::numeric_limits<T>::epsilon() &&
+			std::abs(lhs.z - rhs.z) >= std::numeric_limits<T>::epsilon();
+		else if constexpr (std::is_integral_v<T>)
+			return lhs.x != rhs.x || lhs.y != rhs.y || lhs.z != rhs.z;
 	}
 	template<arithmetic T> constexpr cartesian_coordinate<T> operator+(const cartesian_coordinate<T>& lhs, const cartesian_coordinate<T>& rhs)
 	{
